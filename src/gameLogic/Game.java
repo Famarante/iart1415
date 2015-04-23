@@ -1,8 +1,10 @@
-package gameLogic;
+package gamelogic;
 
 import java.util.Scanner;
 
 import board.Board;
+
+@SuppressWarnings("resource")
 
 public class Game {
 	
@@ -15,15 +17,14 @@ public class Game {
 	
 	public void start(){
 		Scanner sc = new Scanner(System.in); 
-		System.out.println("Que tipo de jogo deseja?\n"
-				+ "1.Computador vs Computador\n"
-				+ "2.Jogador vs Computador\n"
-				+ "3.JogadorvsJogador");
-		int mode=sc.nextInt();
+		System.out.println("What type of game do you want?\n"
+				+ "1 - CPU vs CPU\n"
+				+ "2 - Player vs CPU\n"
+				+ "3 - Player vs Player");
+		int mode=Integer.parseInt(sc.nextLine());
 		
 		if(mode == 3){
-			System.out.println("Nome do Jogador1:");
-			while(sc.nextLine() == null){} //porque esta a ler em branco e o jogador1 fica sem nome
+			System.out.print("Nome do Jogador1: ");
 			String name1=sc.nextLine();
 			p1 = new Player(name1,"B");
 			
@@ -37,7 +38,7 @@ public class Game {
 			p1.addPiece(41);
 			p1.addPiece(51);
 			
-			System.out.println("Nome do Jogador2:");
+			System.out.print("Nome do Jogador2: ");
 			String name2=sc.nextLine();
 			p2 = new Player(name2,"R");
 			
@@ -75,7 +76,7 @@ public class Game {
 		
 		printBoard();
 		Scanner sc = new Scanner(System.in);
-		System.out.println(player.getName()+" wich piece you wish to move?");
+		System.out.println(player.getName()+" which piece you wish to move?");
 		int position = sc.nextInt();
 		while(!validPick(position,player)){
 			System.out.println(player.getName()+" which piece you wish to move?");

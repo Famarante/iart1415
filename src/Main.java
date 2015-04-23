@@ -1,4 +1,4 @@
-import gameLogic.Game;
+import gamelogic.Game;
 
 public class Main {
 	
