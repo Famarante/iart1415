@@ -55,7 +55,7 @@ public class Game {
 	
 	public boolean validPick(int position,Player player){
 		
-		if(gameBoard.getBoard().getNode(position).getName() != player.getPiece()){
+		if(gameBoard.getBoard().getNode(position)==null || gameBoard.getBoard().getNode(position).getName() != player.getPiece()){
 			System.out.println("You must choose one of your pieces! (" +player.getPiece()+")\n");
 			return false;
 		}
@@ -81,22 +81,23 @@ public class Game {
 		else
 			opponent = "B";
 		
-		if(gameBoard.getBoard().getNode(position+1).getName() == opponent) //check northeast
+	
+		if(gameBoard.getBoard().getNode(position+1)!=null && gameBoard.getBoard().getNode(position+1).getName() == opponent) //check northeast
 			return true;
 		
-		if(gameBoard.getBoard().getNode(position+11).getName() == opponent) //check east
+		if(gameBoard.getBoard().getNode(position+11)!=null && gameBoard.getBoard().getNode(position+11).getName() == opponent) //check east
 			return true;
 		
-		if(gameBoard.getBoard().getNode(position+10).getName() == opponent) //check southeast
+		if(gameBoard.getBoard().getNode(position+10)!=null && gameBoard.getBoard().getNode(position+10).getName() == opponent) //check southeast
 			return true;
 		
-		if(gameBoard.getBoard().getNode(position-10).getName() == opponent) //check southwest
+		if(gameBoard.getBoard().getNode(position-10)!=null && gameBoard.getBoard().getNode(position-10).getName() == opponent) //check southwest
 			return true;
 		
-		if(gameBoard.getBoard().getNode(position-11).getName() == opponent) //check west
+		if(gameBoard.getBoard().getNode(position-11)!=null && gameBoard.getBoard().getNode(position-11).getName() == opponent) //check west
 			return true;
 		
-		if(gameBoard.getBoard().getNode(position-1).getName() == opponent) //check norththwest
+		if(gameBoard.getBoard().getNode(position-1)!=null && gameBoard.getBoard().getNode(position-1).getName() == opponent) //check norththwest
 			return true;
 		
 		return false;
