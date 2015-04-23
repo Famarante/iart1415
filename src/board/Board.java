@@ -3,72 +3,134 @@ import graph.*;
 
 
 public class Board {
-	Graph board;
+	public Graph board = new Graph();
 	
 	public void init(){
-		Node a1 = new Node("RedWins");
-		Node a2 = new Node("Blue");
-		Node a3 = new Node("Blue");
-		Node a4 = new Node("Blue");
-		Node a5 = new Node("Blue");
-		Node b1 = new Node("Blue");
-		Node b2 = new Node("Blue");
-		Node b3 = new Node("Empty");
-		Node b4 = new Node("Empty");
-		Node b5 = new Node("Empty");
-		Node b6 = new Node("Empty");
-		Node c1 = new Node("Blue");
-		Node c2 = new Node("Empty");
-		Node c3 = new Node("Empty");
-		Node c4 = new Node("Empty");
-		Node c5 = new Node("Empty");
-		Node c6 = new Node("Empty");
-		Node c7 = new Node("Empty");
-		Node d1 = new Node("Blue");
-		Node d2 = new Node("Empty");
-		Node d3 = new Node("Empty");
-		Node d4 = new Node("Empty");
-		Node d5 = new Node("Empty");
-		Node d6 = new Node("Empty");
-		Node d7 = new Node("Empty");
-		Node d8 = new Node("Empty");
-		Node e1 = new Node("Blue");
-		Node e2 = new Node("Empty");
-		Node e3 = new Node("Empty");
-		Node e4 = new Node("Empty");
-		Node e5 = new Node("Empty");
-		Node e6 = new Node("Empty");
-		Node e7 = new Node("Empty");
-		Node e8 = new Node("Empty");
-		Node e9 = new Node("Red");
-		Node f2 = new Node("Empty");
-		Node f3 = new Node("Empty");
-		Node f4 = new Node("Empty");
-		Node f5 = new Node("Empty");
-		Node f6 = new Node("Empty");
-		Node f7 = new Node("Empty");
-		Node f8 = new Node("Empty");
-		Node f9 = new Node("Red");
-		Node g3 = new Node("Empty");
-		Node g4 = new Node("Empty");
-		Node g5 = new Node("Empty");
-		Node g6 = new Node("Empty");
-		Node g7 = new Node("Empty");
-		Node g8 = new Node("Empty");
-		Node g9 = new Node("Red");
-		Node h4 = new Node("Empty");
-		Node h5 = new Node("Empty");
-		Node h6 = new Node("Empty");
-		Node h7 = new Node("Empty");
-		Node h8 = new Node("Red");
-		Node h9 = new Node("Red");
-		Node i5 = new Node("Red");
-		Node i6 = new Node("Red");
-		Node i7 = new Node("Red");
-		Node i8 = new Node("Red");
-		Node i9 = new Node("BlueWins");
+		Node a1 = new Node("L");
+		Node a2 = new Node("B");
+		Node a3 = new Node("B");
+		Node a4 = new Node("B");
+		Node a5 = new Node("B");
+		Node b1 = new Node("B");
+		Node b2 = new Node("B");
+		Node b3 = new Node("E");
+		Node b4 = new Node("E");
+		Node b5 = new Node("E");
+		Node b6 = new Node("E");
+		Node c1 = new Node("B");
+		Node c2 = new Node("E");
+		Node c3 = new Node("E");
+		Node c4 = new Node("E");
+		Node c5 = new Node("E");
+		Node c6 = new Node("E");
+		Node c7 = new Node("E");
+		Node d1 = new Node("B");
+		Node d2 = new Node("E");
+		Node d3 = new Node("E");
+		Node d4 = new Node("E");
+		Node d5 = new Node("E");
+		Node d6 = new Node("E");
+		Node d7 = new Node("E");
+		Node d8 = new Node("E");
+		Node e1 = new Node("B");
+		Node e2 = new Node("E");
+		Node e3 = new Node("E");
+		Node e4 = new Node("E");
+		Node e5 = new Node("E");
+		Node e6 = new Node("E");
+		Node e7 = new Node("E");
+		Node e8 = new Node("E");
+		Node e9 = new Node("R");
+		Node f2 = new Node("E");
+		Node f3 = new Node("E");
+		Node f4 = new Node("E");
+		Node f5 = new Node("E");
+		Node f6 = new Node("E");
+		Node f7 = new Node("E");
+		Node f8 = new Node("E");
+		Node f9 = new Node("R");
+		Node g3 = new Node("E");
+		Node g4 = new Node("E");
+		Node g5 = new Node("E");
+		Node g6 = new Node("E");
+		Node g7 = new Node("E");
+		Node g8 = new Node("E");
+		Node g9 = new Node("R");
+		Node h4 = new Node("E");
+		Node h5 = new Node("E");
+		Node h6 = new Node("E");
+		Node h7 = new Node("E");
+		Node h8 = new Node("R");
+		Node h9 = new Node("R");
+		Node i5 = new Node("R");
+		Node i6 = new Node("R");
+		Node i7 = new Node("R");
+		Node i8 = new Node("R");
+		Node i9 = new Node("W");
 		
-		board.
+		
+		board.addNode(11, a1);
+		board.addNode(12, a2);
+		board.addNode(13, a3);
+		board.addNode(14, a4);
+		board.addNode(15, a5);
+		board.addNode(21, b1);
+		board.addNode(22, b2);
+		board.addNode(23, b3);
+		board.addNode(24, b4);
+		board.addNode(25, b5);
+		board.addNode(26, b6);
+		board.addNode(31, c1);
+		board.addNode(32, c2);
+		board.addNode(33, c3);
+		board.addNode(34, c4);
+		board.addNode(35, c5);
+		board.addNode(36, c6);
+		board.addNode(37, c7);
+		board.addNode(41, d1);
+		board.addNode(42, d2);
+		board.addNode(43, d3);
+		board.addNode(44, d4);
+		board.addNode(45, d5);
+		board.addNode(46, d6);
+		board.addNode(47, d7);
+		board.addNode(48, d8);
+		board.addNode(51, e1);
+		board.addNode(52, e2);
+		board.addNode(53, e3);
+		board.addNode(54, e4);
+		board.addNode(55, e5);
+		board.addNode(56, e6);
+		board.addNode(57, e7);
+		board.addNode(58, e8);
+		board.addNode(59, e9);
+		board.addNode(62, f2);
+		board.addNode(63, f3);
+		board.addNode(64, f4);
+		board.addNode(65, f5);
+		board.addNode(66, f6);
+		board.addNode(67, f7);
+		board.addNode(68, f8);
+		board.addNode(69, f9);
+		board.addNode(73, g3);
+		board.addNode(74, g4);
+		board.addNode(75, g5);
+		board.addNode(76, g6);
+		board.addNode(77, g7);
+		board.addNode(78, g8);
+		board.addNode(79, g9);
+		board.addNode(84, h4);
+		board.addNode(85, h5);
+		board.addNode(86, h6);
+		board.addNode(87, h7);
+		board.addNode(88, h8);
+		board.addNode(89, h9);
+		board.addNode(95, i5);
+		board.addNode(96, i6);
+		board.addNode(97, i7);
+		board.addNode(98, i8);
+		board.addNode(99, i9);
+		
 /*		
 		Edge a1a2 = new Edge(a1, a2, "NESW");
 		Edge a1b2 = new Edge(a1, b2, "E");
@@ -227,42 +289,27 @@ public class Board {
 		Edge i7i8 = new Edge (i7, i8, "NE");
 		Edge i8i9 = new Edge (i8, i9, "NE");
 */
-
-		
-		
 	}
 	
-	private static char tabuleiro[][] = new char[17][9];
-	private static final int TAB_A = 0;
-	private static final int TAB_B = 1;
-	private static final int TAB_C = 2;
-	private static final int TAB_D = 3;
-	private static final int TAB_E = 4;
-	private static final int TAB_F = 5;
-	private static final int TAB_G = 6;
-	private static final int TAB_H = 7;
-	private static final int TAB_I = 8;
-	private static final int TAB_1 = 0;
-	private static final int TAB_2 = 1;
-	private static final int TAB_3 = 2;
-	private static final int TAB_4 = 3;
-	private static final int TAB_5 = 4;
-	private static final int TAB_6 = 5;
-	private static final int TAB_7 = 6;
-	private static final int TAB_8 = 7;
-	private static final int TAB_9 = 8;
+	public Graph getBoard(){
+		return this.board;
+	}
+	
+	public void printBoard(){
+		StringBuilder s = new StringBuilder();
+		s.append("    "+board.getNode(15)+" "+board.getNode(26)+" "+board.getNode(37)+" "+board.getNode(48)+" "+board.getNode(59)+"    \n");
+		s.append("   "+board.getNode(14)+" "+board.getNode(25)+" "+board.getNode(36)+" "+board.getNode(47)+" "+board.getNode(58)+" "+board.getNode(69)+"   \n");
+		s.append("  "+board.getNode(13)+" "+board.getNode(24)+" "+board.getNode(35)+" "+board.getNode(46)+" "+board.getNode(57)+" "+board.getNode(68)+" "+board.getNode(79)+"  \n");
+		s.append(" "+board.getNode(12)+" "+board.getNode(23)+" "+board.getNode(34)+" "+board.getNode(45)+" "+board.getNode(56)+" "+board.getNode(67)+" "+board.getNode(78)+" "+board.getNode(89)+" \n");
+		s.append(""+board.getNode(11)+" "+board.getNode(22)+" "+board.getNode(33)+" "+board.getNode(44)+" "+board.getNode(55)+" "+board.getNode(66)+" "+board.getNode(77)+" "+board.getNode(88)+" "+board.getNode(99)+"\n");
+		s.append(" "+board.getNode(21)+" "+board.getNode(32)+" "+board.getNode(43)+" "+board.getNode(54)+" "+board.getNode(65)+" "+board.getNode(76)+" "+board.getNode(87)+" "+board.getNode(98)+" \n");
+		s.append("  "+board.getNode(31)+" "+board.getNode(42)+" "+board.getNode(53)+" "+board.getNode(64)+" "+board.getNode(75)+" "+board.getNode(86)+" "+board.getNode(97)+"  \n");
+		s.append("   "+board.getNode(41)+" "+board.getNode(52)+" "+board.getNode(63)+" "+board.getNode(74)+" "+board.getNode(85)+" "+board.getNode(96)+"   \n");
+		s.append("    "+board.getNode(51)+" "+board.getNode(62)+" "+board.getNode(73)+" "+board.getNode(84)+" "+board.getNode(95)+"    \n");
 
-	public Tabuleiro(){
-
+		System.out.println(s.toString());
 	}
 
-	public void preencheTabuleiro(){
-		for(int i = 0; i < 9; i++){
-			for(int j = 0; j < 9; j++){
-				tabuleiro[i][j] = '*';
-			}
-		}
-	}
 /*
 	@Override
 	public String toString() {
@@ -309,61 +356,4 @@ public class Board {
 		return s.toString();
 	}
 */
-	public int insereAnel(char c, int n, char j) {
-		int linha;
-		switch(c){
-		case 'A':
-			linha = TAB_A;
-			break;
-		case 'B':
-			linha = TAB_B;
-			break; 
-		case 'C':
-			linha = TAB_C;
-			break;
-		case 'D':
-			linha = TAB_D;
-			break;
-		case 'E':
-			linha = TAB_E;
-			break;
-		case 'F':
-			linha = TAB_F;
-			break;
-		case 'G':
-			linha = TAB_G;
-			break;
-		case 'H':
-			linha = TAB_H;
-			break;	
-		case 'I':
-			linha = TAB_I;
-			break;	
-		case 'J':
-			linha = TAB_J;
-			break;	
-		case 'K':
-			linha = TAB_K;
-			break;	
-		default:
-			linha = -1;
-			break;
-		}
-		if(linha == -1 || n-1 < 0 || n-1 > 10){
-			System.out.println("Valor invalido!");
-			return -1;
-		}
-		else if (tabuleiro[linha][n-1] != '*'){
-			System.out.println("Casa já ocupada!");
-			return -1;
-		}
-		else{
-			if(j == 'b')
-				tabuleiro[linha][n-1] = 'B';
-			else
-				tabuleiro[linha][n-1] = 'P';
-		}
-		return 0;
-
-	}
 }

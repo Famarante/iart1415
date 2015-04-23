@@ -1,18 +1,18 @@
 package graph;
 
-import java.util.Map;
+import java.util.HashMap;
 
 public class Graph {
 
 	//public ArrayList<Node> nodes;
-	public Map<String,Node> nodes;
+	public HashMap<Integer,Node> nodes = new HashMap<Integer,Node>();
 	
-	public void addNode(String name, Node node){
-		nodes.put(name, node);
+	public void addNode(Integer position, Node node){
+		nodes.put(position, node);
 	}
 	
-	public Node getNode(String name){
-		return nodes.get(name);
+	public Node getNode(Integer position){
+		return nodes.get(position);
 	}
 	
 }
