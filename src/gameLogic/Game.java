@@ -27,9 +27,29 @@ public class Game {
 			String name1=sc.nextLine();
 			p1 = new Player(name1,"B");
 			
+			p1.addPiece(12);
+			p1.addPiece(13);
+			p1.addPiece(14);
+			p1.addPiece(15);
+			p1.addPiece(22);
+			p1.addPiece(21);
+			p1.addPiece(31);
+			p1.addPiece(41);
+			p1.addPiece(51);
+			
 			System.out.println("Nome do Jogador2:");
 			String name2=sc.nextLine();
 			p2 = new Player(name2,"R");
+			
+			p2.addPiece(59);
+			p2.addPiece(69);
+			p2.addPiece(79);
+			p2.addPiece(89);
+			p2.addPiece(88);
+			p2.addPiece(98);
+			p2.addPiece(97);
+			p2.addPiece(96);
+			p2.addPiece(95);
 		}
 		gameBoard.init();
 		
@@ -80,12 +100,30 @@ public class Game {
 			direction = sc.nextInt();
 		}
 		int newPosition = directionEnd(position, direction);
-		move(position,newPosition,player.getPiece());
+		move(position,newPosition,player.getPiece(),player);
 		gameBoard.printBoard();
 	}
 	
-	public void move(int position, int newPosition, String playerPiece){
+	public void move(int position, int newPosition, String playerPiece,Player player){
+		
+		if(gameBoard.getBoard().getNode(newPosition).getName()=="R"){
+			p2.removePiece(newPosition);
+			p1.removePiece(position);
+			p1.addPiece(newPosition);
+		}
+		else if(gameBoard.getBoard().getNode(newPosition).getName()=="B"){
+			p1.removePiece(newPosition);
+			p2.removePiece(position);
+			p2.addPiece(newPosition);
+		}
+		else{
+			player.removePiece(position);
+			player.addPiece(newPosition);
+		}
 		gameBoard.replace(position, newPosition, "E", playerPiece);
+		
+		System.out.println(player.getAllPieces());
+		
 	}
 	
 	public boolean validPick(int position,Player player){
@@ -138,6 +176,16 @@ public class Game {
 		return false;
 	}
 	
+	
+	public boolean allStuck(Player player){
+		
+		for(int i = 0; i<player.getAllPieces().size();i++){
+			if(!isStuck(player.getAllPieces().get(i)))
+				return false;
+		}
+		
+		return true;
+	}
 	public boolean validDirection(int position, int direction){
 		
 		int newPosition = directionEnd(position, direction);
@@ -238,6 +286,14 @@ public class Game {
 		}
 		else if(gameBoard.getBoard().getNode(11).getName()=="R"){
 			System.out.println("Congratulations "+p2.getName()+" you managed to land a piece on your victory spot!!!");
+			return true;
+		}
+		else if(allStuck(p1)){
+			System.out.println("Congratulations "+p2.getName()+" you managed to immobilize all you opponent's pieces!!!");
+			return true;
+		}
+		else if(allStuck(p2)){
+			System.out.println("Congratulations "+p1.getName()+" you managed to immobilize all you opponent's pieces!!!");
 			return true;
 		}
 		return false;

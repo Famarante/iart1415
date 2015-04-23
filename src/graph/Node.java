@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Node{
 	public String name;
-	public final int id;
+	public final String id;
 	//public final ArrayList<Edge> edges;
-	public Node(String name, int id) {
+	public Node(String name, String id) {
 		this.name = name;
 		this.id = id;
 		//edges = new ArrayList<Edge>();
@@ -25,5 +25,9 @@ public class Node{
 	
 	public void changeName(String name){
 		this.name = name;
+	}
+	
+	public String getId(){
+		return this.id;
 	}
 }
