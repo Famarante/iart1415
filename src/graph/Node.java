@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class Node{
 	public final String name;
+	public final int id;
 	//public final ArrayList<Edge> edges;
-	public Node(String name) {
+	public Node(String name, int id) {
 		this.name = name;
+		this.id = id;
 		//edges = new ArrayList<Edge>();
 	}
 	/*public Node addEdge(Node node, String direction){
@@ -17,9 +19,7 @@ public class Node{
 	public ArrayList<Edge> getAllEdges(){
 		return edges;
 	}*/
-	@Override
-	public String toString() {
+	public String getName() {
 		return name;
 	}
-	
 }
