@@ -32,7 +32,15 @@ public class Game {
 			p2 = new Player(name2,"R");
 		}
 		gameBoard.init();
-		play(p1);
+		
+		Player currentPlayer = p1;
+		while(!endGame()){
+			play(currentPlayer);
+			if(currentPlayer == p1)
+				currentPlayer = p2;
+			else
+				currentPlayer = p1;
+		}
 		sc.close();
 	}
 	
@@ -221,5 +229,17 @@ public class Game {
 		}
 		
 		return newPosition;
+	}
+	
+	public boolean endGame(){
+		if(gameBoard.getBoard().getNode(99).getName()=="B"){
+			System.out.println("Congratulations "+p1.getName()+" you managed to land a piece on your victory spot!!!");
+			return true;
+		}
+		else if(gameBoard.getBoard().getNode(11).getName()=="R"){
+			System.out.println("Congratulations "+p2.getName()+" you managed to land a piece on your victory spot!!!");
+			return true;
+		}
+		return false;
 	}
 }
