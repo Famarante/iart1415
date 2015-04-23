@@ -49,7 +49,7 @@ public class Game {
 		Scanner sc = new Scanner(System.in);
 		System.out.println(player.getName()+" wich piece you wish to move?");
 		int position = sc.nextInt();
-		while(!validPick(position,p1)){
+		while(!validPick(position,player)){
 			System.out.println(player.getName()+" which piece you wish to move?");
 			position = sc.nextInt();
 		}
@@ -71,8 +71,13 @@ public class Game {
 					+ "6-northwest\n");
 			direction = sc.nextInt();
 		}
-		System.out.println(direction);
-		sc.close();
+		int newPosition = directionEnd(position, direction);
+		move(position,newPosition,player.getPiece());
+		gameBoard.printBoard();
+	}
+	
+	public void move(int position, int newPosition, String playerPiece){
+		gameBoard.replace(position, newPosition, "E", playerPiece);
 	}
 	
 	public boolean validPick(int position,Player player){

@@ -3,7 +3,7 @@ package graph;
 import java.util.ArrayList;
 
 public class Node{
-	public final String name;
+	public String name;
 	public final int id;
 	//public final ArrayList<Edge> edges;
 	public Node(String name, int id) {
@@ -21,5 +21,9 @@ public class Node{
 	}*/
 	public String getName() {
 		return name;
+	}
+	
+	public void changeName(String name){
+		this.name = name;
 	}
 }

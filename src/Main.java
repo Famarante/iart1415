@@ -1,6 +1,5 @@
 import gameLogic.Game;
 
-
 public class Main {
 	
 	static Game game = new Game();

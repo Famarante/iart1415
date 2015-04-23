@@ -309,6 +309,10 @@ public class Board {
 
 		System.out.println(s.toString());
 	}
+	
+	public void replace(int p1, int p2, String n1, String n2){
+		board.replace(p1, p2, n1, n2);
+	}
 
 /*
 	@Override
