@@ -1,6 +1,8 @@
 package tests;
 
 import static org.junit.Assert.*;
+import gamelogic.Game;
+import gamelogic.Player;
 
 import org.junit.Test;
 

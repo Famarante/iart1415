@@ -66,6 +66,23 @@ public class Game {
 		gameBoard.init();
 		
 		
+		//_________________________TESTE_______________________
+		/*int n = 0;
+		Player currentPlayer = p1;
+		
+		while(n < 4){
+			System.out.println(p1.getName() + " pieces: " + p1.getAllPieces());
+			System.out.println(p2.getName() + " pieces: " + p2.getAllPieces());
+			play(currentPlayer);
+			if(currentPlayer == p1)
+				currentPlayer = p2;
+			else
+				currentPlayer = p1;
+			n++;
+			printBoard();
+		}*/
+		//_____________________________________________________
+		
 		Player currentPlayer = p1;
 		while(endGame() == null){
 			play(currentPlayer);
@@ -73,7 +90,10 @@ public class Game {
 				currentPlayer = p2;
 			else
 				currentPlayer = p1;
+			printBoard();
+			
 		}
+		
 		System.out.println(endMessage);
 		sc.close();
 	}
@@ -90,14 +110,11 @@ public class Game {
 		int position, newPosition;
 		
 		if(player.isCPU()){
-			boolean side = false;
-			
-			if(player.getName()=="CPU1")
-				side = true;
 
 			ArrayList<Integer> movement = chooseMove(player);
 			position = movement.get(0);
 			newPosition = movement.get(1);
+			System.out.println("O jogador " + player.getName() + " moveu " + position + " para " + newPosition);
 		}
 		else{
 			printBoard();
@@ -155,30 +172,28 @@ public class Game {
 		}
 		gameBoard.replace(position, newPosition, "E", playerPiece);
 
-		System.out.println(player.getAllPieces());
-
 	}
 	
 	public void undo(int position, int newPosition, Player player){
 		
 		String dest = moves.get(moves.size()-1), orig;
 		
-		if(gameBoard.getBoard().getNode(newPosition).getName()=="R"){
-			p2.addPiece(newPosition);
-			p1.addPiece(position);
+		if(dest=="R"){
 			p1.removePiece(newPosition);
-			orig = "R";
-		}
-		else if(gameBoard.getBoard().getNode(newPosition).getName()=="B"){
-			p1.addPiece(newPosition);
-			p2.addPiece(position);
-			p2.removePiece(newPosition);
+			p1.addPiece(position);
+			p2.addPiece(newPosition);
 			orig = "B";
+		}
+		else if(dest=="B"){
+			p2.removePiece(newPosition);
+			p2.addPiece(position);
+			p1.addPiece(newPosition);
+			orig = "R";
 		}
 		else{
 			player.addPiece(position);
 			player.removePiece(newPosition);
-			orig = "E";
+			orig = player.getPiece();
 		}
 		gameBoard.replace(position, newPosition, orig, dest);
 		moves.remove(moves.size()-1);
