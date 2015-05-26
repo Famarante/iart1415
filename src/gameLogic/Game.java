@@ -32,6 +32,20 @@ public class Game {
 			p1 = new Player("CPU1","B",true);
 			p2 = new Player("CPU2","R",true);
 		}
+		else if(mode ==2){
+			System.out.print("Player name: ");
+			String name=sc.nextLine();
+			System.out.print("Which color do you want to be?\n1-Blue\n2-Red ");
+			int color = sc.nextInt();
+			if(color==1){
+				p1 = new Player(name,"B",false);
+				p2 = new Player("CPU2","R",true);
+			}
+			else{
+				p1 = new Player("CPU1","B",true);
+				p2 = new Player(name,"R",false);
+			}
+		}
 		else if(mode == 3){
 			System.out.print("Nome do Jogador1: ");
 			String name1=sc.nextLine();
@@ -90,7 +104,6 @@ public class Game {
 				currentPlayer = p2;
 			else
 				currentPlayer = p1;
-			printBoard();
 			
 		}
 		
@@ -108,16 +121,15 @@ public class Game {
 	public void play(Player player){
 
 		int position, newPosition;
-		
+		printBoard();
 		if(player.isCPU()){
 
 			ArrayList<Integer> movement = chooseMove(player);
 			position = movement.get(0);
 			newPosition = movement.get(1);
-			System.out.println("O jogador " + player.getName() + " moveu " + position + " para " + newPosition);
+			System.out.println(player.getName() + " moved from " + position + " to " + newPosition);
 		}
 		else{
-			printBoard();
 			Scanner sc = new Scanner(System.in);
 			System.out.println(player.getName()+" which piece you wish to move?");
 			position = sc.nextInt();
@@ -371,7 +383,7 @@ public class Game {
 		return null;
 	}
 	
-	//computer movement functions
+	//__________________________________________COMPUTER MOVEMENT FUCNTIONS____________________________________________________________________
 	public ArrayList<Integer> chooseMove(Player player){
 		ArrayList<ArrayList<Integer> > allMoves = getAllMoves(player);
 		int max = 0, index=0;
@@ -412,22 +424,51 @@ public class Game {
 	
 	public int evalFunction(Player player, ArrayList<Integer> move){
 		int ret = 0;
-		
+		Player current, opponent;
 		String orig = gameBoard.getBoard().getNode(move.get(0)).getName();
 		String dest = gameBoard.getBoard().getNode(move.get(1)).getName();
 		
+		if(player == p1){
+			current = p1;
+			opponent = p2;
+		}
+		else{
+			current = p2;
+			opponent = p1;
+		}
 		
+		int oldCurrentStuckPieces = numberofPiecesStuck(current);
+		int oldOpponentStuckPieces = numberofPiecesStuck(opponent);
 		
 		move(move.get(0), move.get(1), orig, player);
+		
+		int newCurrentStuckPieces = numberofPiecesStuck(current);
+		int newOpponentStuckPieces = numberofPiecesStuck(opponent);
 		
 		//calcEval
 		if(endGame() == player)
 			ret = 100;
 		else if(dest != "E")
 			ret = 50;
+		else if(newOpponentStuckPieces > oldOpponentStuckPieces)
+			ret = 15;
+		else if(newCurrentStuckPieces > oldCurrentStuckPieces)
+			ret = -15;
 		
 		undo(move.get(0), move.get(1), player);
 		
 		return ret;
 	}
+	
+	public int numberofPiecesStuck(Player player){
+		int piecesStuck=0;
+		
+		for(int i = 0; i<player.getAllPieces().size();i++){
+			if(isStuck(player.getAllPieces().get(i)))
+				piecesStuck++;
+		}
+		
+		return piecesStuck;
+	}
+	//__________________________________________________________________________________________________________________________________________
 }
