@@ -79,24 +79,6 @@ public class Game {
 		
 		gameBoard.init();
 		
-		
-		//_________________________TESTE_______________________
-		/*int n = 0;
-		Player currentPlayer = p1;
-		
-		while(n < 4){
-			System.out.println(p1.getName() + " pieces: " + p1.getAllPieces());
-			System.out.println(p2.getName() + " pieces: " + p2.getAllPieces());
-			play(currentPlayer);
-			if(currentPlayer == p1)
-				currentPlayer = p2;
-			else
-				currentPlayer = p1;
-			n++;
-			printBoard();
-		}*/
-		//_____________________________________________________
-		
 		Player currentPlayer = p1;
 		while(endGame() == null){
 			play(currentPlayer);
@@ -124,9 +106,9 @@ public class Game {
 		printBoard();
 		if(player.isCPU()){
 
-			ArrayList<Integer> movement = chooseMove(player);
-			position = movement.get(0);
-			newPosition = movement.get(1);
+			Move movement = chooseMove(player, true, 2);
+			position = movement.getOrigin();
+			newPosition = movement.getDestination();
 			System.out.println(player.getName() + " moved from " + position + " to " + newPosition);
 		}
 		else{
@@ -384,19 +366,50 @@ public class Game {
 	}
 	
 	//__________________________________________COMPUTER MOVEMENT FUCNTIONS____________________________________________________________________
-	public ArrayList<Integer> chooseMove(Player player){
+	public Move chooseMove(Player player, boolean turn, int depth){
+		
+		Move currentBest = new Move();
+		Move opponentBest = new Move();
+		
+		if(evalFunction(player) == 1000 || evalFunction(player) == -1000 || depth == 0){
+			currentBest.setScore(evalFunction(player));
+			return currentBest;
+		}
+		
+		Player current, opponent;
+		
+		if(player == p1){
+			current = p1;
+			opponent = p2;
+		}
+		else{
+			current = p2;
+			opponent = p1;
+		}
+		
+		if(!turn)
+			currentBest.setScore(-2000);
+		else
+			currentBest.setScore(2000);
+		
 		ArrayList<ArrayList<Integer> > allMoves = getAllMoves(player);
-		int max = 0, index=0;
 		
 		for(int i = 0; i < allMoves.size(); i++){
-			int val = evalFunction(player, allMoves.get(i));
-			if(val > max){
-				max = val;
-				index=i;
+			
+			move(allMoves.get(i).get(0), allMoves.get(i).get(1), gameBoard.getBoard().getNode(allMoves.get(i).get(0)).getName(), player);
+			System.out.println("Move: " + allMoves.get(i).get(0) + " | " + allMoves.get(i).get(1));
+			Move reply = chooseMove(opponent, !turn, depth-1);
+			System.out.println("Reply: " + reply.getScore() + " | " + reply.getOrigin() + "  | " + reply.getDestination());
+			undo(allMoves.get(i).get(0), allMoves.get(i).get(1), player);
+			
+			if( (!turn && (reply.getScore() > currentBest.getScore())) || (turn && (reply.getScore() < currentBest.getScore())) ){
+				currentBest.setScore(reply.getScore());
+				currentBest.setPositions(allMoves.get(i).get(0), allMoves.get(i).get(1));
 			}
 		}
 		
-		return allMoves.get(index);
+		
+		return currentBest;
 	}
 	
 	public ArrayList<ArrayList<Integer> > getAllMoves(Player player){
@@ -422,11 +435,9 @@ public class Game {
 		return allMoves;
 	}
 	
-	public int evalFunction(Player player, ArrayList<Integer> move){
+	public int evalFunction(Player player/*, ArrayList<Integer> move*/){
 		int ret = 0;
 		Player current, opponent;
-		String orig = gameBoard.getBoard().getNode(move.get(0)).getName();
-		String dest = gameBoard.getBoard().getNode(move.get(1)).getName();
 		
 		if(player == p1){
 			current = p1;
@@ -437,25 +448,19 @@ public class Game {
 			opponent = p1;
 		}
 		
-		int oldCurrentStuckPieces = numberofPiecesStuck(current);
-		int oldOpponentStuckPieces = numberofPiecesStuck(opponent);
-		
-		move(move.get(0), move.get(1), orig, player);
-		
-		int newCurrentStuckPieces = numberofPiecesStuck(current);
-		int newOpponentStuckPieces = numberofPiecesStuck(opponent);
+		int CurrentStuckPieces = numberofPiecesStuck(current);
+		int OpponentStuckPieces = numberofPiecesStuck(opponent);
+		int CurrentNumberofPieces = current.getAllPieces().size();
+		int OpponentNumberofPieces = opponent.getAllPieces().size();
 		
 		//calcEval
-		if(endGame() == player)
-			ret = 100;
-		else if(dest != "E")
-			ret = 50;
-		else if(newOpponentStuckPieces > oldOpponentStuckPieces)
-			ret = 15;
-		else if(newCurrentStuckPieces > oldCurrentStuckPieces)
-			ret = -15;
-		
-		undo(move.get(0), move.get(1), player);
+		if(endGame() == current)
+			ret = 1000;
+		else if(endGame() == opponent)
+			ret = -1000;
+		else {
+			ret = OpponentStuckPieces - CurrentStuckPieces + CurrentNumberofPieces - OpponentNumberofPieces; 
+		}
 		
 		return ret;
 	}
@@ -470,5 +475,15 @@ public class Game {
 		
 		return piecesStuck;
 	}
+	/*
+	public int calcDistanceToWin(Player player){
+		int dist = 0;
+		
+		for(int i = 0; i < player.getAllPieces().size(); i++){
+			//int temp = player.getAllPieces().get[i];
+		}
+		
+		return dist;
+	}*/
 	//__________________________________________________________________________________________________________________________________________
 }

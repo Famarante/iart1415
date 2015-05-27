@@ -2,8 +2,6 @@ package gamelogic;
 
 import java.util.ArrayList;
 
-import board.Board;
-
 public class Player {
 	String name;
 	String piece;
