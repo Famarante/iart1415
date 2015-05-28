@@ -7,12 +7,14 @@ public class Player {
 	String piece;
 	ArrayList<Integer> pieces = new ArrayList<Integer>();
 	boolean cpu;
+	int difficulty;
 	
-	public Player(String n, String p, boolean c){
+	public Player(String n, String p, boolean c, int d){
 
 		this.name=n;
 		this.piece=p;
 		this.cpu=c;
+		this.difficulty = d;
 	}
 	
 	public String getName(){
@@ -37,5 +39,13 @@ public class Player {
 	
 	public boolean isCPU(){
 		return this.cpu;
+	}
+	
+	public void setDifficulty(int d){
+		this.difficulty = d;
+	}
+	
+	public int getDifficulty(){
+		return difficulty;
 	}
 }

@@ -29,8 +29,8 @@ public class Game {
 		moves = new ArrayList<String>();
 		
 		if(mode == 1){
-			p1 = new Player("CPU1","B",true);
-			p2 = new Player("CPU2","R",true);
+			p1 = new Player("CPU1","B",true, 4);
+			p2 = new Player("CPU2","R",true, 3);
 		}
 		else if(mode ==2){
 			System.out.print("Player name: ");
@@ -38,22 +38,22 @@ public class Game {
 			System.out.print("Which color do you want to be?\n1-Blue\n2-Red ");
 			int color = sc.nextInt();
 			if(color==1){
-				p1 = new Player(name,"B",false);
-				p2 = new Player("CPU2","R",true);
+				p1 = new Player(name,"B",false, 0);
+				p2 = new Player("CPU2","R",true, 3);
 			}
 			else{
-				p1 = new Player("CPU1","B",true);
-				p2 = new Player(name,"R",false);
+				p1 = new Player("CPU1","B",true, 3);
+				p2 = new Player(name,"R",false, 0);
 			}
 		}
 		else if(mode == 3){
 			System.out.print("Nome do Jogador1: ");
 			String name1=sc.nextLine();
-			p1 = new Player(name1,"B",false);
+			p1 = new Player(name1,"B",false, 0);
 
 			System.out.print("Nome do Jogador2: ");
 			String name2=sc.nextLine();
-			p2 = new Player(name2,"R",false);
+			p2 = new Player(name2,"R",false, 0);
 
 		}
 		
@@ -106,7 +106,7 @@ public class Game {
 		printBoard();
 		if(player.isCPU()){
 
-			Move movement = chooseMove(player, true, 2);
+			Move movement = chooseMove(player, player, player.getDifficulty());
 			position = movement.getOrigin();
 			newPosition = movement.getDestination();
 			System.out.println(player.getName() + " moved from " + position + " to " + newPosition);
@@ -158,6 +158,11 @@ public class Game {
 			p2.removePiece(position);
 			p2.addPiece(newPosition);
 			moves.add("B");
+		}
+		else if(gameBoard.getBoard().getNode(newPosition).getName()=="W" || gameBoard.getBoard().getNode(newPosition).getName()=="L"){
+			player.removePiece(position);
+			player.addPiece(newPosition);
+			moves.add(gameBoard.getBoard().getNode(newPosition).getName());
 		}
 		else{
 			player.removePiece(position);
@@ -366,43 +371,47 @@ public class Game {
 	}
 	
 	//__________________________________________COMPUTER MOVEMENT FUCNTIONS____________________________________________________________________
-	public Move chooseMove(Player player, boolean turn, int depth){
+	public Move chooseMove(Player player, Player turn, int depth){
 		
 		Move currentBest = new Move();
-		Move opponentBest = new Move();
+		//Move opponentBest = new Move();
 		
-		if(evalFunction(player) == 1000 || evalFunction(player) == -1000 || depth == 0){
-			currentBest.setScore(evalFunction(player));
+		int boardValue = evalFunction(player); 
+		
+		if(boardValue == 1000 || boardValue == -1000 || depth == 0){
+			currentBest.setScore(boardValue);
 			return currentBest;
 		}
 		
-		Player current, opponent;
+		Player opponent;
 		
-		if(player == p1){
-			current = p1;
+		if(turn == p1)
 			opponent = p2;
-		}
-		else{
-			current = p2;
+		else
 			opponent = p1;
-		}
 		
-		if(!turn)
+		
+		if(turn == player)
 			currentBest.setScore(-2000);
 		else
 			currentBest.setScore(2000);
 		
-		ArrayList<ArrayList<Integer> > allMoves = getAllMoves(player);
+		
+		ArrayList<ArrayList<Integer> > allMoves = getAllMoves(turn);
 		
 		for(int i = 0; i < allMoves.size(); i++){
 			
-			move(allMoves.get(i).get(0), allMoves.get(i).get(1), gameBoard.getBoard().getNode(allMoves.get(i).get(0)).getName(), player);
-			System.out.println("Move: " + allMoves.get(i).get(0) + " | " + allMoves.get(i).get(1));
-			Move reply = chooseMove(opponent, !turn, depth-1);
-			System.out.println("Reply: " + reply.getScore() + " | " + reply.getOrigin() + "  | " + reply.getDestination());
-			undo(allMoves.get(i).get(0), allMoves.get(i).get(1), player);
+			move(allMoves.get(i).get(0), allMoves.get(i).get(1), gameBoard.getBoard().getNode(allMoves.get(i).get(0)).getName(), turn);
 			
-			if( (!turn && (reply.getScore() > currentBest.getScore())) || (turn && (reply.getScore() < currentBest.getScore())) ){
+			//System.out.println("Move: " + allMoves.get(i).get(0) + " | " + allMoves.get(i).get(1));
+			
+			Move reply = chooseMove(player, opponent, depth-1);
+			
+			//System.out.println("Reply: " + reply.getScore() + " | " + reply.getOrigin() + "  | " + reply.getDestination());
+			
+			undo(allMoves.get(i).get(0), allMoves.get(i).get(1), turn);
+			
+			if( ( (turn != player) && (reply.getScore() < currentBest.getScore())) || ((turn == player) && (reply.getScore() > currentBest.getScore())) ){
 				currentBest.setScore(reply.getScore());
 				currentBest.setPositions(allMoves.get(i).get(0), allMoves.get(i).get(1));
 			}
@@ -435,7 +444,7 @@ public class Game {
 		return allMoves;
 	}
 	
-	public int evalFunction(Player player/*, ArrayList<Integer> move*/){
+	public int evalFunction(Player player){
 		int ret = 0;
 		Player current, opponent;
 		
@@ -453,6 +462,8 @@ public class Game {
 		int CurrentNumberofPieces = current.getAllPieces().size();
 		int OpponentNumberofPieces = opponent.getAllPieces().size();
 		
+		//System.out.println("OPS: " + OpponentStuckPieces + " | ES: " + CurrentStuckPieces + " | OPN: " + OpponentNumberofPieces + " | EN: " + CurrentNumberofPieces);
+		
 		//calcEval
 		if(endGame() == current)
 			ret = 1000;
@@ -462,6 +473,7 @@ public class Game {
 			ret = OpponentStuckPieces - CurrentStuckPieces + CurrentNumberofPieces - OpponentNumberofPieces; 
 		}
 		
+		//System.out.println(ret);
 		return ret;
 	}
 	
