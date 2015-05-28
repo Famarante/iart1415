@@ -29,8 +29,8 @@ public class Game {
 		moves = new ArrayList<String>();
 		
 		if(mode == 1){
-			p1 = new Player("CPU1","B",true, 6);
-			p2 = new Player("CPU2","R",true, 7);
+			p1 = new Player("CPU1","B",true, 5);
+			p2 = new Player("CPU2","R",true, 3);
 		}
 		else if(mode ==2){
 			System.out.print("Player name: ");
@@ -374,7 +374,6 @@ public class Game {
 	public Move chooseMove(Player player, Player turn, int depth, int alpha, int beta){
 		
 		Move currentBest = new Move();
-		//Move opponentBest = new Move();
 		
 		int boardValue = evalFunction(player); 
 		
@@ -403,11 +402,7 @@ public class Game {
 			
 			move(allMoves.get(i).get(0), allMoves.get(i).get(1), gameBoard.getBoard().getNode(allMoves.get(i).get(0)).getName(), turn);
 			
-			//System.out.println("Move: " + allMoves.get(i).get(0) + " | " + allMoves.get(i).get(1));
-			
 			Move reply = chooseMove(player, opponent, depth-1, alpha, beta);
-			
-			//System.out.println("Reply: " + reply.getScore() + " | " + reply.getOrigin() + "  | " + reply.getDestination());
 			
 			undo(allMoves.get(i).get(0), allMoves.get(i).get(1), turn);
 			
@@ -415,13 +410,11 @@ public class Game {
 				currentBest.setScore(reply.getScore());
 				currentBest.setPositions(allMoves.get(i).get(0), allMoves.get(i).get(1));
 				alpha = reply.getScore();
-				//System.out.println("Alpha: " + alpha);
 			}
 			else if((turn != player) && (reply.getScore() < currentBest.getScore())) {
 				currentBest.setScore(reply.getScore());
 				currentBest.setPositions(allMoves.get(i).get(0), allMoves.get(i).get(1));
 				beta = reply.getScore();
-				//System.out.println("Beta: " + beta);
 			}
 			if(alpha >= beta)
 				return currentBest;
@@ -469,19 +462,15 @@ public class Game {
 		int OpponentStuckPieces = numberofPiecesStuck(opponent);
 		int CurrentNumberofPieces = current.getAllPieces().size();
 		int OpponentNumberofPieces = opponent.getAllPieces().size();
-		
-		//System.out.println("OPS: " + OpponentStuckPieces + " | ES: " + CurrentStuckPieces + " | OPN: " + OpponentNumberofPieces + " | EN: " + CurrentNumberofPieces);
-		
+				
 		//calcEval
 		if(endGame() == current)
 			ret = 1000;
 		else if(endGame() == opponent)
 			ret = -1000;
 		else {
-			ret = OpponentStuckPieces - CurrentStuckPieces + CurrentNumberofPieces - OpponentNumberofPieces; 
+			ret = OpponentStuckPieces + CurrentNumberofPieces - CurrentStuckPieces - OpponentNumberofPieces - calcDistanceToWin(current); 
 		}
-		
-		//System.out.println(ret);
 		return ret;
 	}
 	
@@ -495,15 +484,33 @@ public class Game {
 		
 		return piecesStuck;
 	}
-	/*
+
 	public int calcDistanceToWin(Player player){
-		int dist = 0;
+		int dist = 10, goal;
+		
+		if(player == p1)
+			goal = 9;
+		else
+			goal = 1;
 		
 		for(int i = 0; i < player.getAllPieces().size(); i++){
-			//int temp = player.getAllPieces().get[i];
+			if(!isStuck(player.getAllPieces().get(i))){
+				int temp = calcDist(player.getAllPieces().get(i), goal);
+				if(temp < dist)
+					dist = temp;
+			}
 		}
 		
 		return dist;
-	}*/
+	}
+	
+	public int calcDist(int position, int dest){
+		int posX = position/10, posY = position%10;
+		
+		int d1= Math.abs(dest-posX), d2= Math.abs(dest-posY);
+		if(d1>=d2)
+			return d1;
+		return d2;
+	}
 	//__________________________________________________________________________________________________________________________________________
 }

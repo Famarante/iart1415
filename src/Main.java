@@ -8,5 +8,6 @@ public class Main {
 		
 		game.start();
 		//game.printBoard();
+
 	}
 }
