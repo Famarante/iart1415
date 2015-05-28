@@ -29,8 +29,8 @@ public class Game {
 		moves = new ArrayList<String>();
 		
 		if(mode == 1){
-			p1 = new Player("CPU1","B",true, 4);
-			p2 = new Player("CPU2","R",true, 3);
+			p1 = new Player("CPU1","B",true, 6);
+			p2 = new Player("CPU2","R",true, 7);
 		}
 		else if(mode ==2){
 			System.out.print("Player name: ");
@@ -106,7 +106,7 @@ public class Game {
 		printBoard();
 		if(player.isCPU()){
 
-			Move movement = chooseMove(player, player, player.getDifficulty());
+			Move movement = chooseMove(player, player, player.getDifficulty(), -2000, 2000);
 			position = movement.getOrigin();
 			newPosition = movement.getDestination();
 			System.out.println(player.getName() + " moved from " + position + " to " + newPosition);
@@ -371,7 +371,7 @@ public class Game {
 	}
 	
 	//__________________________________________COMPUTER MOVEMENT FUCNTIONS____________________________________________________________________
-	public Move chooseMove(Player player, Player turn, int depth){
+	public Move chooseMove(Player player, Player turn, int depth, int alpha, int beta){
 		
 		Move currentBest = new Move();
 		//Move opponentBest = new Move();
@@ -392,9 +392,9 @@ public class Game {
 		
 		
 		if(turn == player)
-			currentBest.setScore(-2000);
+			currentBest.setScore(alpha);
 		else
-			currentBest.setScore(2000);
+			currentBest.setScore(beta);
 		
 		
 		ArrayList<ArrayList<Integer> > allMoves = getAllMoves(turn);
@@ -405,19 +405,27 @@ public class Game {
 			
 			//System.out.println("Move: " + allMoves.get(i).get(0) + " | " + allMoves.get(i).get(1));
 			
-			Move reply = chooseMove(player, opponent, depth-1);
+			Move reply = chooseMove(player, opponent, depth-1, alpha, beta);
 			
 			//System.out.println("Reply: " + reply.getScore() + " | " + reply.getOrigin() + "  | " + reply.getDestination());
 			
 			undo(allMoves.get(i).get(0), allMoves.get(i).get(1), turn);
 			
-			if( ( (turn != player) && (reply.getScore() < currentBest.getScore())) || ((turn == player) && (reply.getScore() > currentBest.getScore())) ){
+			if((turn == player) && (reply.getScore() > currentBest.getScore())){
 				currentBest.setScore(reply.getScore());
 				currentBest.setPositions(allMoves.get(i).get(0), allMoves.get(i).get(1));
+				alpha = reply.getScore();
+				//System.out.println("Alpha: " + alpha);
 			}
+			else if((turn != player) && (reply.getScore() < currentBest.getScore())) {
+				currentBest.setScore(reply.getScore());
+				currentBest.setPositions(allMoves.get(i).get(0), allMoves.get(i).get(1));
+				beta = reply.getScore();
+				//System.out.println("Beta: " + beta);
+			}
+			if(alpha >= beta)
+				return currentBest;
 		}
-		
-		
 		return currentBest;
 	}
 	
