@@ -1,6 +1,8 @@
 package gamelogic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 import board.Board;
@@ -9,15 +11,26 @@ import board.Board;
 
 public class Game {
 
-	static Board gameBoard = new Board();
+	static Board gameBoard;
 	Player p1, p2;
 	ArrayList<String> moves;
 	String endMessage, errorMessage;
+	Player currentPlayer;
 
 	public void printBoard(){
 		gameBoard.printBoard();
 	}
+	
+	public Board getGameBoard() {
+		return gameBoard;
+	}
+	
+	public Player getCurrentPlayer(){
+		return currentPlayer;
+	}
 
+	
+	
 	public void start(){
 		Scanner sc = new Scanner(System.in); 
 		System.out.println("What type of game do you want?\n"
@@ -29,7 +42,7 @@ public class Game {
 		moves = new ArrayList<String>();
 		
 		if(mode == 1){
-			p1 = new Player("CPU1","B",true, 5);
+			p1 = new Player("CPU1","B",true, 4);
 			p2 = new Player("CPU2","R",true, 3);
 		}
 		else if(mode ==2){
@@ -77,9 +90,11 @@ public class Game {
 		p2.addPiece(96);
 		p2.addPiece(95);
 		
+		gameBoard = new Board();
 		gameBoard.init();
 		
-		Player currentPlayer = p1;
+		currentPlayer = p1;
+		
 		while(endGame() == null){
 			play(currentPlayer);
 			if(currentPlayer == p1)
@@ -99,7 +114,7 @@ public class Game {
 	public String getP2Name(){
 		return p2.getName();
 	}
-
+	
 	public void play(Player player){
 
 		int position, newPosition;
@@ -201,13 +216,13 @@ public class Game {
 	public boolean validPick(int position,Player player){
 
 		if(gameBoard.getBoard().getNode(position)==null || gameBoard.getBoard().getNode(position).getName() != player.getPiece()){
-			errorMessage = "You must choose one of your pieces! (" +player.getPiece()+")\n";
+			errorMessage = "Tem de escolher uma das suas peças! (" +player.getPiece()+")\n";
 			return false;
 		}
 
 
 		if(isStuck(position)){
-			errorMessage = "The piece you chose is stuck!\n";
+			errorMessage = "A peça que escolheu está presa!\n";
 			return false;
 		}
 
@@ -352,19 +367,19 @@ public class Game {
 
 	public Player endGame(){
 		if(gameBoard.getBoard().getNode(99).getName()=="B"){
-			endMessage = "Congratulations "+p1.getName()+" you managed to land a piece on your victory spot!!!";
+			endMessage = "Parabéns "+p1.getName()+"!\nChegaste à casa de vitória!!!";
 			return p1;
 		}
 		else if(gameBoard.getBoard().getNode(11).getName()=="R"){
-			endMessage = "Congratulations "+p2.getName()+" you managed to land a piece on your victory spot!!!";
+			endMessage = "Parabéns "+p2.getName()+"!\nChegaste à casa de vitória!!!";
 			return p2;
 		}
 		else if(allStuck(p1)){
-			endMessage = "Congratulations "+p2.getName()+" you managed to immobilize all you opponent's pieces!!!";
+			endMessage = "Parabéns "+p2.getName()+"!\nConseguiste imobilizar todas as peças do teu oponente!!!";
 			return p2;
 		}
 		else if(allStuck(p2)){
-			endMessage = "Congratulations "+p1.getName()+" you managed to immobilize all you opponent's pieces!!!";
+			endMessage = "Parabéns "+p1.getName()+"!\nConseguiste imobilizar todas as peças do teu oponente!!!";
 			return p1;
 		}
 		return null;
@@ -397,6 +412,8 @@ public class Game {
 		
 		
 		ArrayList<ArrayList<Integer> > allMoves = getAllMoves(turn);
+		long seed = System.nanoTime();
+		Collections.shuffle(allMoves, new Random(seed));
 		
 		for(int i = 0; i < allMoves.size(); i++){
 			
@@ -469,7 +486,7 @@ public class Game {
 		else if(endGame() == opponent)
 			ret = -1000;
 		else {
-			ret = OpponentStuckPieces + CurrentNumberofPieces - CurrentStuckPieces - OpponentNumberofPieces - calcDistanceToWin(current); 
+			ret = OpponentStuckPieces + CurrentNumberofPieces - CurrentStuckPieces - OpponentNumberofPieces - calcDistanceToWin(current) + calcDistanceToWin(opponent); 
 		}
 		return ret;
 	}
@@ -513,4 +530,102 @@ public class Game {
 		return d2;
 	}
 	//__________________________________________________________________________________________________________________________________________
+
+	//________________________________________GUI Funtions_____________________________________________________________________________________
+
+	public void initGUI(String playerName, int cpuDiff, int color){
+		if(color==1){
+			p1 = new Player(playerName,"B",false, 0);
+			p2 = new Player("CPU2","R",true, cpuDiff);
+		}
+		else{
+			p1 = new Player("CPU1","B",true, cpuDiff);
+			p2 = new Player(playerName,"R",false, 0);
+		}
+		startGUI();
+	}
+	
+	public void initGUI(String player1Name, String player2Name){
+		p1 = new Player(player1Name,"B",false, 0);
+		p2 = new Player(player2Name,"R",false, 0); 
+		startGUI();
+	} 
+	
+	public void initGUI(int cpu1Diff, int cpu2Diff){
+		p1 = new Player("CPU1","B",true, cpu1Diff);
+		p2 = new Player("CPU2","R",true, cpu2Diff);
+		startGUI();
+	}
+	
+	public void startGUI(){
+		p1.addPiece(12);
+		p1.addPiece(13);
+		p1.addPiece(14);
+		p1.addPiece(15);
+		p1.addPiece(22);
+		p1.addPiece(21);
+		p1.addPiece(31);
+		p1.addPiece(41);
+		p1.addPiece(51);
+		
+		p2.addPiece(59);
+		p2.addPiece(69);
+		p2.addPiece(79);
+		p2.addPiece(89);
+		p2.addPiece(88);
+		p2.addPiece(98);
+		p2.addPiece(97);
+		p2.addPiece(96);
+		p2.addPiece(95);
+		
+		gameBoard = new Board();
+		gameBoard.init();
+		moves = new ArrayList<String>();
+		currentPlayer = p1;
+	}
+
+	public boolean playGUI(Player player, int pos){
+		if(!validPick(pos, player)){
+			System.out.println(errorMessage);
+			return false;
+		}
+		return true;
+	}
+	public boolean playGUI(Player player, int pos, int direction){
+		
+		if(!validDirection(pos, direction)){
+			System.out.println(errorMessage);
+			return false;
+		}
+		
+		//int newPosition = directionEnd(pos, direction);
+		//move(pos,newPosition,player.getPiece(),player);
+		
+		return true;
+	}
+	
+	public void changePlayerGUI(){
+		if(currentPlayer == p1)
+			currentPlayer = p2;
+		else
+			currentPlayer = p1;
+	}
+	
+	public ArrayList<Integer> possibleMoves(Player player, int piece){
+		ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
+		
+				for(int dir = 1; dir <= 6; dir++){
+					if(validDirection(piece,dir)){
+						int newPosition = directionEnd(piece, dir);
+						possibleMoves.add(newPosition);
+			}
+		}
+		
+		return possibleMoves;
+	}
+	
+	public String getWinningMessage(){
+		return this.endMessage;
+	}
+	
 }
