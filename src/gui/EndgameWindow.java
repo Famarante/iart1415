@@ -1,10 +1,6 @@
 package gui;
 
-import gamelogic.Game;
-import gamelogic.Player;
-
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -16,14 +12,9 @@ import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JLabel;
-
 import java.awt.Font;
 import java.awt.Color;
 
-import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 
 import java.awt.SystemColor;
@@ -95,7 +86,7 @@ public class EndgameWindow {
 			public void mouseClicked(MouseEvent e) {
 				endgameFrame.dispose();
 				StartMenu.closeGame();
-				StartMenu newGame = new StartMenu();
+				new StartMenu();
 			}
 		});
 		btnExit.setBounds(132, 327, 186, 43);

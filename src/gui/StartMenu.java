@@ -13,7 +13,6 @@ import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class StartMenu {
 
@@ -47,7 +46,7 @@ public class StartMenu {
 			public void run() {
 				try {
 					window = new StartMenu();
-					window.getWindow().getFrmAboyneMenu().setVisible(true);
+					StartMenu.getWindow().getFrmAboyneMenu().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -95,7 +94,7 @@ public class StartMenu {
 		btnPlayerVsCPU.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel pvsCPU = new PvCPUPanel();
+				PvCPUPanel pvsCPU = new PvCPUPanel();
 				frmAboyneMenu.getContentPane().removeAll();
 				frmAboyneMenu.getContentPane().add(pvsCPU);
 				frmAboyneMenu.pack();
@@ -126,7 +125,7 @@ public class StartMenu {
 		btnPlayerVsPlayer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel pvp = new PvPPanel();
+				PvPPanel pvp = new PvPPanel();
 				frmAboyneMenu.getContentPane().removeAll();
 				frmAboyneMenu.getContentPane().add(pvp);
 				frmAboyneMenu.pack();
@@ -142,7 +141,7 @@ public class StartMenu {
 		btnCPUvsCPU.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel CPUvsCPU = new CPUvCPUPanel();
+				CPUvCPUPanel CPUvsCPU = new CPUvCPUPanel();
 				frmAboyneMenu.getContentPane().removeAll();
 				frmAboyneMenu.getContentPane().add(CPUvsCPU);
 				frmAboyneMenu.pack();
@@ -192,7 +191,7 @@ public class StartMenu {
 		cpu2Difficulty = cpu2Dif;
 	}
 
-	public static int getWindowSize() {
+	public int getWindowSize() {
 		return windowSize;
 	}
 	
@@ -200,11 +199,11 @@ public class StartMenu {
 		frmAboyneMenu.dispose();
 	}
 
-	public static int getCpu1Difficulty() {
+	public int getCpu1Difficulty() {
 		return cpu1Difficulty;
 	}
 	
-	public static int getCpu2Difficulty() {
+	public int getCpu2Difficulty() {
 		return cpu2Difficulty;
 	}
 }

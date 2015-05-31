@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+@SuppressWarnings("rawtypes")
+
 public class OptionsPanel extends JPanel {
 
 	/**
@@ -22,6 +24,8 @@ public class OptionsPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
+	@SuppressWarnings("unchecked")
 	public OptionsPanel() {
 		setLayout(null);
 		

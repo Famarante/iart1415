@@ -2,13 +2,8 @@ package gui;
 
 import gamelogic.Game;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -17,10 +12,6 @@ import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Locale.Category;
-
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 
@@ -92,7 +83,7 @@ public class CPUvCPUPanel extends JPanel {
 				JPanel gameBoard = new HexBoard(StartMenu.getWindow().getWindowSize(), StartMenu.getWindow().getSCREEN_WIDTH(), StartMenu.getWindow().getSCREEN_HEIGHT(), newGame);
 				PlayerInfoPanel pl1Info = new PlayerInfoPanel("Jogador 1", newGame.getP1Name(), "left");
 				PlayerInfoPanel pl2Info = new PlayerInfoPanel("Jogador 2", newGame.getP2Name(), "right");
-				MenuPanel menu = new MenuPanel();
+				MenuPanel menu = new MenuPanel("cpuvcpu");
 				StartMenu.getWindow().getFrmAboyneMenu().getContentPane().removeAll();
 				StartMenu.getWindow().getFrmAboyneMenu().getContentPane().add(gameBoard, BorderLayout.CENTER);
 				StartMenu.getWindow().getFrmAboyneMenu().getContentPane().add(pl1Info, BorderLayout.WEST);

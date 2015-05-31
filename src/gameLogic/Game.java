@@ -557,6 +557,13 @@ public class Game {
 		startGUI();
 	}
 	
+	public String surrender(Player player){
+		if(player == p1)
+			return "O jogador " + p2.name + " ganhou devido à desistência do jogador" +  p1.name;
+		else
+			return "O jogador " + p1.name + " ganhou devido à desistência do jogador" +  p2.name;
+	}
+	
 	public void startGUI(){
 		p1.addPiece(12);
 		p1.addPiece(13);

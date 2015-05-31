@@ -3,13 +3,11 @@ import gamelogic.Game;
 import gamelogic.Move;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
-import java.math.*;
 import java.util.ArrayList;
 
 public class HexBoard extends JPanel implements MouseListener{
@@ -43,6 +41,10 @@ public class HexBoard extends JPanel implements MouseListener{
 		}
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		addMouseListener(this);
+	}
+
+	Game getGame() {
+		return game;
 	}
 
 	@Override
@@ -185,7 +187,7 @@ public class HexBoard extends JPanel implements MouseListener{
 					color = Color.blue;
 				else
 					color = Color.red;
-				EndgameWindow winnerWindow = new EndgameWindow(game.getWinningMessage(), color);
+				new EndgameWindow(game.getWinningMessage(), color);
 			}
 			game.changePlayerGUI();
 			getParent().revalidate();
@@ -199,12 +201,8 @@ public class HexBoard extends JPanel implements MouseListener{
 
 			int positionClicked = boardPositionsConverter.get(componentClicked);
 
-			String errorMessage = "";
-
-			if(positionClicked == -1)//clicked outside the board
-				errorMessage = "Tem de escolher uma das suas peças";
-
-			else if(selectedPiece > -1 && selectedPiece != positionClicked){
+			if(positionClicked == -1) {
+			} else if(selectedPiece > -1 && selectedPiece != positionClicked){
 
 				String positionClickedName = game.getGameBoard().getBoard().getNode(positionClicked).getName();
 				if(positionClickedName == "EH" || positionClickedName == "BH" || positionClickedName == "RH" || positionClickedName == "LH" || positionClickedName == "WH"){
@@ -224,7 +222,7 @@ public class HexBoard extends JPanel implements MouseListener{
 							color = Color.blue;
 						else
 							color = Color.red;
-						EndgameWindow winnerWindow = new EndgameWindow(game.getWinningMessage(), color);
+						new EndgameWindow(game.getWinningMessage(), color);
 					}
 					game.changePlayerGUI();
 					getParent().revalidate();

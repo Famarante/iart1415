@@ -1,31 +1,17 @@
 package gui;
 
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-
 import java.awt.Font;
 
 import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Locale.Category;
-
-import javax.swing.JFormattedTextField;
-import javax.swing.JEditorPane;
-import javax.swing.JTree;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
 
-import java.awt.Color;
 import java.awt.SystemColor;
 
 import javax.swing.UIManager;
-import javax.swing.DropMode;
 
 public class RulesPanel extends JPanel {
 

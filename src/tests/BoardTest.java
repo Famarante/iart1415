@@ -12,6 +12,7 @@ import board.Board;
 
 public class BoardTest {
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void testBoard() {
 		Board board = new Board();
